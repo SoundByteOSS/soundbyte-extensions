@@ -1,10 +1,12 @@
-﻿// MEDIA PLAYBACK
+﻿/// <reference path="../../soundbyte.d.ts" />
+
+// MEDIA PLAYBACK
 
 /**
  * Gets the auto stream url for the music provider.
  * @param {*} trackId The track we need the music stream for.
  */
-function getMediaStream(trackId) {
+function getMediaStream(trackId: string) {
     // SoundCloud has a fixed rate on playbacks. This system 
     // chooses a key on random and plays from it.
     var id = playbackIds[Math.floor(Math.random() * playbackIds.length)];
@@ -14,20 +16,20 @@ function getMediaStream(trackId) {
 
 // CONTENT GROUPS
 
-function getTopTracks(count, token, parameters) {
+function getTopTracks(count: number, token: string, parameters: any) {
     return getExploreItems(count, token, parameters, "top");
 }
 
-function getTrendingTracks(count, token, parameters) {
+function getTrendingTracks(count: number, token: string, parameters: any) {
     return getExploreItems(count, token, parameters, "trending");
 }
 
-function getExploreItems(count, token, parameters, kind) {
+function getExploreItems(count: number, token: string, parameters: any, kind: string) {
     var filter = parameters["filter"] || "all-music";
     var genre = "soundcloud%3Agenres%3A" + filter;
 
     // Temp array that will store the return tracks
-    var returnTracks = new Array();
+    var returnTracks = new Array<soundbyte.Media>();
 
     // Construct the URL
     var uri = "https://api-v2.soundcloud.com/charts?kind=" + kind + "&genre=" + genre + "&limit=" + count + "&offset=" + token + "&linked_partitioning=1&client_id=" + clientId;
@@ -48,33 +50,33 @@ function getExploreItems(count, token, parameters, kind) {
 
     // Handle when there are no items
     if (data.collection.length == 0) {
-        return new SourceResponse(null, null, false, "No results found", "No items matching");
+        return new soundbyte.SourceResponse(null, null, false, "No results found", "No items matching");
     }
 
     // Convert the SoundCloud objects int SoundByte objects.
-    data.collection.forEach(function (item) {
+    data.collection.forEach(function (item: any) {
         if (item.track != null) {
             var sbTrack = toSbTrack(item.track);
             if (sbTrack != null) {
-                returnTracks.push(new GenericItem(sbTrack));
+                returnTracks.push(sbTrack);
             }
         }
     });
 
     // Return the tracks back to SoundByte
-    return new SourceResponse(returnTracks, extractedToken, true, "", "");
+    return new soundbyte.SourceResponse(returnTracks, extractedToken, true);
 }
 
-function navigateTopTracks(parent) {
+function navigateTopTracks(parent: any) {
     navigateToExploreView(parent, "Top 50 SoundCloud Tracks");
 }
 
-function navigateTrendingTracks(parent) {
+function navigateTrendingTracks(parent: any) {
     navigateToExploreView(parent, "New & Hot SoundCloud Tracks");
 }
 
-function navigateToExploreView(parent, title) {
-    sb.navigation.navigateTo(PageName.FilteredListView, new FilteredListViewHolder(parent.collection, title, [
+function navigateToExploreView(parent: any, title: string) {
+    soundbyte.navigation.navigateTo("FilteredListViewModel", new FilteredListViewHolder(parent.collection, title, [
         new FilterViewItem(true, "General"),
 
         new FilterViewItem("All Music Genres", "all-music"),
