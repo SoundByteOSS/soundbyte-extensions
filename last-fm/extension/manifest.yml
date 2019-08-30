@@ -1,0 +1,29 @@
+# Basic information about the extension
+id: 7b1a6f54-0738-4c90-a889-749a303e8fcb
+name: Last.fm for SoundByte
+publisher: SoundByte
+version: 1.0.0
+platformVersion: 1.0
+description: Provides support for SoundCloud playback.
+url: https://soundbytemedia.com/store/details?id=7b1a6f54-0738-4c90-a889-749a303e8fcb
+
+# The script that contains code for this extension
+script: main.js
+
+# What areas of the application can be accessed
+permissions:
+  - playback
+  - network
+  - authentication
+
+# The platforms this extension can run on.
+platforms:
+  - uwp
+  - ios
+
+# Custom authentication (last fm does some weird stuff), so we have to provide all the methods
+authentication:
+  type: custom
+  onDisconnect: onAccountDisconnected
+  onConnect: onAccountConnected
+  isConnected: isAccountConnected
