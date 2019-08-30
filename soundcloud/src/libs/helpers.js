@@ -26,7 +26,6 @@ function toSbTrack(item) {
 
         // Build the track object
         var track = new Track();
-        track.serviceType = 1; // TEMP
         track.trackId = item.id;
         track.link = item.permalink_url;
         track.artworkUrl = artworkUrl;
@@ -57,7 +56,6 @@ function toSbUser(item) {
     var defaultUser = "http://a1.sndcdn.com/images/default_avatar_large.png";
 
     var user = new User();
-    user.serviceType = 1; // TEMP
     user.userId = item.id;
     user.username = item.username;
     user.country = item.country_code;
