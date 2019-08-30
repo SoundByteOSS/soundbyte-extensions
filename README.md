@@ -9,8 +9,8 @@ The `soundbyte.d.ts` file is the JavaScript API def, (note that some features ma
 These extensions do not use TypeScript, but instead make use of the TypeScript CLI to combine files.
 
 1. Ensure node / npm are installed (or see step 2)
-2. `npm install -g typescript` (`sudo apt install node-typescript` may also work on linux / WSL)
-3. Go to the extension folder that you wish to build, open the `src` folder
+2. `npm install -g typescript` (`sudo apt install node-typescript` might also work on linux / WSL)
+3. Navigate to the extension folder that you wish to build / run
 4. Run the `tsc` command to generate the extension `main.js` file
 
 ## iOS install instructions
