@@ -4,7 +4,8 @@ name: Last.fm for SoundByte
 publisher: SoundByte
 version: 1.0.0
 platformVersion: 1.0
-description: Provides support for SoundCloud playback.
+shortDescription: Provides Last.fm scrobbling support for SoundByte
+description: Last.fm for SoundByte allows you to scrobble all your tracks to Last.fm
 url: https://soundbytemedia.com/store/details?id=7b1a6f54-0738-4c90-a889-749a303e8fcb
 
 # The script that contains code for this extension

@@ -13,7 +13,7 @@ function getExploreItems(count, token, parameters, kind) {
     var genre = "soundcloud%3Agenres%3A" + filter;
     var returnTracks = new Array();
     var uri = "https://api-v2.soundcloud.com/charts?kind=" + kind + "&genre=" + genre + "&limit=" + count + "&offset=" + token + "&linked_partitioning=1&client_id=" + clientId;
-    var data = JSON.parse(network.getString(uri));
+    var data = JSON.parse(sb.network.getString(uri));
     var nextUrl = data.next_href;
     var extractedToken = null;
     if (nextUrl != null) {
@@ -27,7 +27,7 @@ function getExploreItems(count, token, parameters, kind) {
         if (item.track != null) {
             var sbTrack = toSbTrack(item.track);
             if (sbTrack != null) {
-                returnTracks.push(fromTrack(sbTrack));
+                returnTracks.push(new GenericItem(sbTrack));
             }
         }
     });
@@ -40,7 +40,7 @@ function navigateTrendingTracks(parent) {
     navigateToExploreView(parent, "New & Hot SoundCloud Tracks");
 }
 function navigateToExploreView(parent, title) {
-    navigation.navigateTo(PageName.FilteredListView, new FilteredListViewHolder(parent.collection, title, [
+    sb.navigation.navigateTo(PageName.FilteredListView, new FilteredListViewHolder(parent.collection, title, [
         new FilterViewItem(true, "General"),
         new FilterViewItem("All Music Genres", "all-music"),
         new FilterViewItem("All Audio Genres", "all-audio"),
@@ -109,7 +109,7 @@ function toSbTrack(item) {
         track.artworkUrl = artworkUrl;
         track.thumbnailUrl = thumbnailUrl;
         track.created = item.created_at;
-        track.duration = utils.timeFromMilliseconds(item.duration);
+        track.duration = sb.utils.timeFromMilliseconds(item.duration);
         track.description = item.description;
         track.title = item.title;
         track.user = user;
@@ -120,7 +120,7 @@ function toSbTrack(item) {
         return track;
     }
     catch (e) {
-        log("ERROR: " + e);
+        sb.log("ERROR: " + e);
         return null;
     }
 }

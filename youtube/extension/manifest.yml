@@ -1,0 +1,46 @@
+# Basic information about the extension
+id: 7fa4ee30-4c7b-4c84-8e62-b4ee1c5fc262
+name: YouTube Music Support
+publisher: SoundByte
+version: 1.0.0
+platformVersion: 1.0
+description: Provides support for YouTube Music playback.
+url: https://soundbytemedia.com/store/item/7fa4ee30-4c7b-4c84-8e62-b4ee1c5fc262
+
+# The script that contains code for this extension
+script: main.js
+
+# What areas of the application can be accessed
+permissions:
+  - authentication
+  - network
+  - navigation
+
+# The platforms this music provider can run on.
+platforms:
+  - uwp
+  - ios
+
+# Extension assets
+assets:
+  storeLogo: assets/store.png
+
+# Authentication
+authentication:
+  type: oauth
+  clientId: 1065985627197-th8jmhv58pf9dk4530khul402nn49hs5.apps.googleusercontent.com
+  connectUrl: https://accounts.google.com/o/oauth2/v2/auth?client_id={CLIENT_ID}&redirect_uri={REDIRECT_URL}&response_type=code&state={STATE}&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube
+
+# Music Provider setup
+provider:
+  # Basic Information
+  name: YouTube
+
+  # Handle playback
+  playback:
+    supportsVideo: true
+    onMusicRequest: getAudioStream # JS method to get the audio stream
+    onVideoRequest: getVideoStream # JS method to get the video stream
+
+  # Music content defintions
+  content:
