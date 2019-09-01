@@ -58,6 +58,30 @@ declare namespace soundbyte {
     export class SourceResponse {
         constructor(items: Media[], nextToken: string, successful?: boolean, messageTitle?: string, messageContent?: string);
     }
+
+    export class FilteredListViewModelHolder {
+        constructor(model: any, title: string, filters: FilterViewItem[]);
+
+        model: any;
+        title: string;
+        filters: FilterViewItem[];
+    }
+
+    export class FilterViewItem {
+        constructor(isHeader: boolean, displayName: string);
+        constructor(displayName: string);
+        constructor(displayName: string, filterName: string);
+
+        filterName: string;
+        displayName: string;
+    }
+
+    export class GenericListViewModelHolder {
+        constructor(model: any, title: string);
+
+        model: any;
+        title: string;
+    }
 }
 
 // Allow other scripts to use this definition
