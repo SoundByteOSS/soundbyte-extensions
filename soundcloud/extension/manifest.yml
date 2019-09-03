@@ -47,14 +47,14 @@ provider:
   content:
     # Explore Page
     - title: New & Hot SoundCloud Tracks
-      area: ExploreTracks
+      area: BrowseMedia
       buttons:
         - PlayAllButton
         - ShufflePlayButton
       onGet: getTrendingTracks
       onViewMore: navigateTrendingTracks
     - title: Top 50 SoundCloud Tracks
-      area: ExploreTracks
+      area: BrowseMedia
       buttons:
         - PlayAllButton
         - ShufflePlayButton

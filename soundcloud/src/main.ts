@@ -37,7 +37,7 @@ function getExploreItems(count: number, token: string, parameters: any, kind: st
     // Get a response from the SoundCloud API, and parse
     // it into an object.
     // var data = sb.network.get(uri);
-    var data = JSON.parse(sb.network.getString(uri));
+    var data = JSON.parse(soundbyte.network.getStringTemp(uri));
 
     // Extract the next offset / token
     var nextUrl = data.next_href;

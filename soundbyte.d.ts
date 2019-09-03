@@ -15,6 +15,12 @@ declare namespace soundbyte {
         export function setSecure(key: string, value: string): void;
     }
 
+    export namespace network {
+        export function getStringTemp(url: string): string;
+    }
+
+    export function timeFromMilliseconds(ms: number): any;
+
     export enum MediaType {
         Unknown,
         Track,
@@ -44,7 +50,10 @@ declare namespace soundbyte {
     }
 
     export class User extends Media {
-
+        userId: string;
+        username: string;
+        artworkUrl: string;
+        description: string;
     }
 
     export class Playlist extends Media {

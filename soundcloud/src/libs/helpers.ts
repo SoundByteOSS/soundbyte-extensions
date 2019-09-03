@@ -25,7 +25,7 @@ function toSbTrack(item: any): soundbyte.Track {
     track.link = item.permalink_url;
     track.artworkUrl = artworkUrl;
     track.created = item.created_at;
-    track.duration = item.duration;
+    track.duration = soundbyte.timeFromMilliseconds(item.duration);
     track.description = item.description;
     track.title = item.title;
     track.user = user;
@@ -43,9 +43,7 @@ function toSbUser(item: any): soundbyte.User {
     var user = new soundbyte.User();
     user.userId = item.id;
     user.username = item.username;
-    user.country = item.country_code;
     user.artworkUrl = item.avatar_url || defaultUser;
-    user.thumbnailUrl = item.avatar_url || defaultUser;
 
     return user;
 }
@@ -55,7 +53,7 @@ function toSbUser(item: any): soundbyte.User {
  * compatible playlist.
  */
 function toSbPlaylist(item): soundbyte.Playlist {
-    var playlist = new Playlist();
+    var playlist = new soundbyte.Playlist();
 
     return playlist;
 }
