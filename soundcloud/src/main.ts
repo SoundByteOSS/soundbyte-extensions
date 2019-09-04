@@ -16,6 +16,45 @@ function getMediaStream(trackId: string) {
 
 // CONTENT GROUPS
 
+function getUserLikes(count: number, token: string, parameters: any) {
+    // Temp array that will store the return tracks
+    var returnTracks = new Array<soundbyte.Media>();
+
+    // Construct the URL
+    var uri = "https://api.soundcloud.com/me/favorites?limit=" + count + "&cursor" + token + "&linked_partitioning=1&client_id=" + clientId;
+
+    // Get a response from the SoundCloud API, and parse
+    // it into an object.
+    var data = JSON.parse(soundbyte.network.performRequest(uri));
+
+    // Extract the next offset / token
+    var nextUrl = data.next_href;
+    var extractedToken = null;
+
+    if (nextUrl != null) {
+        var matches = nextUrl.match(/offset=([^&]*)/);
+        extractedToken = matches[0].substring(7, matches[0].length);
+    }
+
+    // Handle when there are no items
+    if (data.collection.length == 0) {
+        return new soundbyte.SourceResponse("No likes", "You have not liked any music on SoundCloud yet.");
+    }
+
+    // Convert the SoundCloud objects int SoundByte objects.
+    data.collection.forEach(function (item: any) {
+        if (item.track != null) {
+            var sbTrack = toSbTrack(item.track);
+            if (sbTrack != null) {
+                returnTracks.push(sbTrack);
+            }
+        }
+    });
+
+    // Return the tracks back to SoundByte
+    return new soundbyte.SourceResponse(returnTracks, extractedToken);
+}
+
 function getTopTracks(count: number, token: string, parameters: any) {
     return getExploreItems(count, token, parameters, "top");
 }
@@ -36,8 +75,7 @@ function getExploreItems(count: number, token: string, parameters: any, kind: st
 
     // Get a response from the SoundCloud API, and parse
     // it into an object.
-    // var data = sb.network.get(uri);
-    var data = JSON.parse(soundbyte.network.getStringTemp(uri));
+    var data = JSON.parse(soundbyte.network.performRequest(uri));
 
     // Extract the next offset / token
     var nextUrl = data.next_href;
@@ -50,7 +88,7 @@ function getExploreItems(count: number, token: string, parameters: any, kind: st
 
     // Handle when there are no items
     if (data.collection.length == 0) {
-        return new soundbyte.SourceResponse(null, null, false, "No results found", "No items matching");
+        return new soundbyte.SourceResponse("No results found", "No items matching");
     }
 
     // Convert the SoundCloud objects int SoundByte objects.
@@ -64,7 +102,7 @@ function getExploreItems(count: number, token: string, parameters: any, kind: st
     });
 
     // Return the tracks back to SoundByte
-    return new soundbyte.SourceResponse(returnTracks, extractedToken, true);
+    return new soundbyte.SourceResponse(returnTracks, extractedToken);
 }
 
 function navigateTopTracks(parent: any) {

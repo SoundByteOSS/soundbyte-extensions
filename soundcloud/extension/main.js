@@ -2,6 +2,29 @@ function getMediaStream(trackId) {
     var id = playbackIds[Math.floor(Math.random() * playbackIds.length)];
     return "https://api.soundcloud.com/tracks/" + trackId + "/stream?client_id=" + id;
 }
+function getUserLikes(count, token, parameters) {
+    var returnTracks = new Array();
+    var uri = "https://api.soundcloud.com/me/favorites?limit=" + count + "&cursor" + token + "&linked_partitioning=1&client_id=" + clientId;
+    var data = JSON.parse(soundbyte.network.performRequest(uri));
+    var nextUrl = data.next_href;
+    var extractedToken = null;
+    if (nextUrl != null) {
+        var matches = nextUrl.match(/offset=([^&]*)/);
+        extractedToken = matches[0].substring(7, matches[0].length);
+    }
+    if (data.collection.length == 0) {
+        return new soundbyte.SourceResponse("No likes", "You have not liked any music on SoundCloud yet.");
+    }
+    data.collection.forEach(function (item) {
+        if (item.track != null) {
+            var sbTrack = toSbTrack(item.track);
+            if (sbTrack != null) {
+                returnTracks.push(sbTrack);
+            }
+        }
+    });
+    return new soundbyte.SourceResponse(returnTracks, extractedToken);
+}
 function getTopTracks(count, token, parameters) {
     return getExploreItems(count, token, parameters, "top");
 }
@@ -13,7 +36,7 @@ function getExploreItems(count, token, parameters, kind) {
     var genre = "soundcloud%3Agenres%3A" + filter;
     var returnTracks = new Array();
     var uri = "https://api-v2.soundcloud.com/charts?kind=" + kind + "&genre=" + genre + "&limit=" + count + "&offset=" + token + "&linked_partitioning=1&client_id=" + clientId;
-    var data = JSON.parse(soundbyte.network.getStringTemp(uri));
+    var data = JSON.parse(soundbyte.network.performRequest(uri));
     var nextUrl = data.next_href;
     var extractedToken = null;
     if (nextUrl != null) {
@@ -21,7 +44,7 @@ function getExploreItems(count, token, parameters, kind) {
         extractedToken = matches[0].substring(7, matches[0].length);
     }
     if (data.collection.length == 0) {
-        return new soundbyte.SourceResponse(null, null, false, "No results found", "No items matching");
+        return new soundbyte.SourceResponse("No results found", "No items matching");
     }
     data.collection.forEach(function (item) {
         if (item.track != null) {
@@ -31,7 +54,7 @@ function getExploreItems(count, token, parameters, kind) {
             }
         }
     });
-    return new soundbyte.SourceResponse(returnTracks, extractedToken, true);
+    return new soundbyte.SourceResponse(returnTracks, extractedToken);
 }
 function navigateTopTracks(parent) {
     navigateToExploreView(parent, "Top 50 SoundCloud Tracks");

@@ -16,7 +16,8 @@ declare namespace soundbyte {
     }
 
     export namespace network {
-        export function getStringTemp(url: string): string;
+        export function performRequest(url: string): string;
+        export function performAnonymousRequest(url: string): string;
     }
 
     export function timeFromMilliseconds(ms: number): any;
@@ -65,7 +66,8 @@ declare namespace soundbyte {
     }
 
     export class SourceResponse {
-        constructor(items: Media[], nextToken: string, successful?: boolean, messageTitle?: string, messageContent?: string);
+        constructor(items: Media[], nextToken: string);
+        constructor(errorTitle: string, errorContent: string);
     }
 
     export class FilteredListViewModelHolder {

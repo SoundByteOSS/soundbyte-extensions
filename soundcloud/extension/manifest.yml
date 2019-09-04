@@ -1,6 +1,6 @@
 # Basic information about the extension
 id: 02dfa08f-6c33-47fd-89cc-8a1c7c65be46
-name: SoundCloud
+name: SoundCloud Music Support
 publisher: SoundByte
 version: 1.0.0
 platformVersion: 1.0
@@ -28,15 +28,13 @@ assets:
 # Authentication
 authentication:
   type: oauth
+  scheme: OAuth
   clientId: gU5Rw9VDiPPA4OcDlC8VVcb19sHDZFTT
   redirectUrl: http://localhost/soundbyte
-  connectUrl: https://soundcloud.com/connect?scope=non-expiring&client_id=gU5Rw9VDiPPA4OcDlC8VVcb19sHDZFTT&responseType=code&display=popup&redirect_uri=http://localhost/soundbyte
+  connectUrl: https://soundcloud.com/connect?scope=non-expiring&client_id=gU5Rw9VDiPPA4OcDlC8VVcb19sHDZFTT&response_type=code&display=popup&redirect_uri=http://localhost/soundbyte
 
 # Music Provider setup
 provider:
-  # Basic Information
-  name: SoundCloud
-
   # Handle playback
   playback:
     supportsVideo: false
@@ -46,17 +44,24 @@ provider:
   # Music content defintions
   content:
     # Explore Page
-    - title: New & Hot SoundCloud Tracks
-      area: BrowseMedia
+    - title: New & Hot SoundCloud
+      area: DiscoverMedia
       buttons:
         - PlayAllButton
         - ShufflePlayButton
       onGet: getTrendingTracks
       onViewMore: navigateTrendingTracks
-    - title: Top 50 SoundCloud Tracks
-      area: BrowseMedia
+    - title: Top 50 SoundCloud
+      area: DiscoverMedia
       buttons:
         - PlayAllButton
         - ShufflePlayButton
       onGet: getTopTracks
       onViewMore: navigateTopTracks
+    # Logged in users likes
+    - title: SoundCloud
+      area: MyMusicLikes
+      buttons:
+        - PlayAllButton
+        - ShufflePlayButton
+      onGet: getUserLikes
