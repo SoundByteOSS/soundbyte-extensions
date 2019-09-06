@@ -33,9 +33,6 @@ authentication:
 
 # Music Provider setup
 provider:
-  # Basic Information
-  name: YouTube
-
   # Handle playback
   playback:
     supportsVideo: true
