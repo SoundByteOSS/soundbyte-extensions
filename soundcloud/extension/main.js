@@ -4,7 +4,7 @@ function getMediaStream(trackId) {
 }
 function getUserLikes(count, token, parameters) {
     var returnTracks = new Array();
-    var uri = "https://api.soundcloud.com/me/favorites?limit=" + count + "&cursor" + token + "&linked_partitioning=1&client_id=" + clientId;
+    var uri = "https://api.soundcloud.com/me/favorites?limit=" + count + "&cursor=" + token + "&linked_partitioning=1&client_id=" + clientId;
     var data = JSON.parse(soundbyte.network.performRequest(uri));
     var nextUrl = data.next_href;
     var extractedToken = null;

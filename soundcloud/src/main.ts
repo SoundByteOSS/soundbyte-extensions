@@ -21,7 +21,7 @@ function getUserLikes(count: number, token: string, parameters: any) {
     var returnTracks = new Array<soundbyte.Media>();
 
     // Construct the URL
-    var uri = "https://api.soundcloud.com/me/favorites?limit=" + count + "&cursor" + token + "&linked_partitioning=1&client_id=" + clientId;
+    var uri = "https://api.soundcloud.com/me/favorites?limit=" + count + "&cursor=" + token + "&linked_partitioning=1&client_id=" + clientId;
 
     // Get a response from the SoundCloud API, and parse
     // it into an object.
@@ -32,7 +32,7 @@ function getUserLikes(count: number, token: string, parameters: any) {
     var extractedToken = null;
 
     if (nextUrl != null) {
-        var matches = nextUrl.match(/offset=([^&]*)/);
+        var matches = nextUrl.match(/cursor=([^&]*)/);
         extractedToken = matches[0].substring(7, matches[0].length);
     }
 
