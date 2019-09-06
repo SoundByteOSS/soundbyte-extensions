@@ -16,12 +16,7 @@ function getUserLikes(count, token, parameters) {
         return new soundbyte.SourceResponse("No likes", "You have not liked any music on SoundCloud yet.");
     }
     data.collection.forEach(function (item) {
-        if (item.track != null) {
-            var sbTrack = toSbTrack(item.track);
-            if (sbTrack != null) {
-                returnTracks.push(sbTrack);
-            }
-        }
+        returnTracks.push(toSbTrack(item));
     });
     return new soundbyte.SourceResponse(returnTracks, extractedToken);
 }

@@ -41,14 +41,9 @@ function getUserLikes(count: number, token: string, parameters: any) {
         return new soundbyte.SourceResponse("No likes", "You have not liked any music on SoundCloud yet.");
     }
 
-    // Convert the SoundCloud objects int SoundByte objects.
+    // Convert the SoundCloud tracks into SoundByte objects.
     data.collection.forEach(function (item: any) {
-        if (item.track != null) {
-            var sbTrack = toSbTrack(item.track);
-            if (sbTrack != null) {
-                returnTracks.push(sbTrack);
-            }
-        }
+        returnTracks.push(toSbTrack(item));
     });
 
     // Return the tracks back to SoundByte
