@@ -29,7 +29,7 @@ assets:
 authentication:
   type: oauth
   clientId: 1065985627197-th8jmhv58pf9dk4530khul402nn49hs5.apps.googleusercontent.com
-  connectUrl: https://accounts.google.com/o/oauth2/v2/auth?client_id={CLIENT_ID}&redirect_uri={REDIRECT_URL}&response_type=code&state={STATE}&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube
+  connectUrl: https://accounts.google.com/o/oauth2/v2/auth?client_id=1065985627197-th8jmhv58pf9dk4530khul402nn49hs5.apps.googleusercontent.com&redirect_uri=http://localhost/soundbyte&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube
 
 # Music Provider setup
 provider:
