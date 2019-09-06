@@ -9,7 +9,7 @@ function getUserLikes(count, token, parameters) {
     var nextUrl = data.next_href;
     var extractedToken = null;
     if (nextUrl != null) {
-        var matches = nextUrl.match(/offset=([^&]*)/);
+        var matches = nextUrl.match(/cursor=([^&]*)/);
         extractedToken = matches[0].substring(7, matches[0].length);
     }
     if (data.collection.length == 0) {
