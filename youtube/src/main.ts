@@ -23,7 +23,7 @@ function getTrending(count: number, token: string, parameters: any) {
     var returnItems = new Array<soundbyte.Media>();
 
     // Construct the URL
-    var uri = "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&chart=mostPopular&maxResults=" + count + "&videoCategoryId=10&pageToken=" + token + "&key=" + clientId;
+    var uri = "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&chart=mostPopular&maxResults=" + count + "&videoCategoryId=10&pageToken=" + token + "&key=" + clientKey;
 
     // Get a response from the YouTube API, and parse
     // it into an object.

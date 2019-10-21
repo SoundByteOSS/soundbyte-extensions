@@ -1,6 +1,6 @@
 /// <reference path="../../../soundbyte.d.ts" />
 
-const clientId = "gU5Rw9VDiPPA4OcDlC8VVcb19sHDZFTT";
+const clientKey = "AIzaSyACcC1JE0krWn90rfk5kVpx-Y8qkoqta40";
 
 function toSbTrack(item: any): soundbyte.Track {
 
