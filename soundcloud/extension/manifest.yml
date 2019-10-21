@@ -34,10 +34,10 @@ authentication:
   connectUrl: https://soundcloud.com/connect?scope=non-expiring&client_id=gU5Rw9VDiPPA4OcDlC8VVcb19sHDZFTT&response_type=code&display=popup&redirect_uri=http://localhost/soundbyte
 
 # Handle playback
-  playback:
-    supportsVideo: false
-    onMusicRequest: getMediaStream # JS method to get the media stream
-    #onVideoRequest
+playback:
+  supportsVideo: false
+  onMusicRequest: getMediaStream # JS method to get the media stream
+  #onVideoRequest
 
 # Music content defintions
 content:
