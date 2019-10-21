@@ -32,7 +32,7 @@ function getUserStream(count: number, token: string, parameters: any) {
     var extractedToken = null;
 
     if (nextUrl != null) {
-        var matches = nextUrl.match(/cursor=([^&]*)/);
+        var matches = nextUrl.match(/offset=([^&]*)/);
         extractedToken = matches[0].substring(7, matches[0].length);
     }
 
