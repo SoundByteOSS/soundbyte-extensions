@@ -38,3 +38,13 @@ playback:
   supportsVideo: true
   onMusicRequest: getAudioStream # JS method to get the audio stream
   onVideoRequest: getVideoStream # JS method to get the video stream
+
+# Music content defintions
+content:
+  # Explore Page
+  - title: Trending on YouTube
+    area: DiscoverMedia
+    buttons:
+      - PlayAllButton
+      - ShufflePlayButton
+    onGet: getTrending
