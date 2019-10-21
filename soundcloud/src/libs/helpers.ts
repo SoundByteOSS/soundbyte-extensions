@@ -52,8 +52,28 @@ function toSbUser(item: any): soundbyte.User {
  * Convert a SoundCloud playlist to a SoundByte 
  * compatible playlist.
  */
-function toSbPlaylist(item): soundbyte.Playlist {
+function toSbPlaylist(item: any): soundbyte.Playlist {
+    // Convert the user class
+    var user = toSbUser(item.user);
+
+    // Calculate the required image sizes
+    var artworkUrl = item.artwork_url || user.artworkUrl;
+
+    // If the artwork url contains large, replace with the correct size.
+    if (artworkUrl.indexOf("large") != -1) {
+        artworkUrl = artworkUrl.replace("large", "t500x500");
+    }
+
+    // Build the playlist object
     var playlist = new soundbyte.Playlist();
+    playlist.playlistId = item.id;
+    playlist.link = item.permalink_url;
+    playlist.artworkUrl = artworkUrl;
+    playlist.created = item.created_at;
+    playlist.duration = soundbyte.timeFromMilliseconds(item.duration);
+    playlist.description = item.description;
+    playlist.title = item.title;
+    playlist.user = user;
 
     return playlist;
 }

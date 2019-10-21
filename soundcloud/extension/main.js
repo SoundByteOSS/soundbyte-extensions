@@ -3,7 +3,31 @@ function getMediaStream(trackId) {
     return "https://api.soundcloud.com/tracks/" + trackId + "/stream?client_id=" + id;
 }
 function getUserStream(count, token, parameters) {
-    return new soundbyte.SourceResponse("Not Implemented", "This content group has not been implemented");
+    var returnItems = new Array();
+    var uri = "https://api.soundcloud.com/e1/me/stream?limit=" + count + "&cursor=" + token + "&linked_partitioning=1&client_id=" + clientId;
+    var data = JSON.parse(soundbyte.network.performRequest(uri));
+    var nextUrl = data.next_href;
+    var extractedToken = null;
+    if (nextUrl != null) {
+        var matches = nextUrl.match(/cursor=([^&]*)/);
+        extractedToken = matches[0].substring(7, matches[0].length);
+    }
+    if (data.collection.length == 0) {
+        return new soundbyte.SourceResponse("No items", "Follow someone on SoundCloud to get started.");
+    }
+    data.collection.forEach(function (item) {
+        switch (item.type) {
+            case "track":
+            case "track-repost":
+                returnItems.push(toSbTrack(item));
+                break;
+            case "playlist":
+            case "playlist-repost":
+                returnItems.push(toSbPlaylist(item));
+                break;
+        }
+    });
+    return new soundbyte.SourceResponse(returnItems, extractedToken);
 }
 function getUserLikes(count, token, parameters) {
     var returnTracks = new Array();
@@ -138,6 +162,19 @@ function toSbUser(item) {
     return user;
 }
 function toSbPlaylist(item) {
+    var user = toSbUser(item.user);
+    var artworkUrl = item.artwork_url || user.artworkUrl;
+    if (artworkUrl.indexOf("large") != -1) {
+        artworkUrl = artworkUrl.replace("large", "t500x500");
+    }
     var playlist = new soundbyte.Playlist();
+    playlist.playlistId = item.id;
+    playlist.link = item.permalink_url;
+    playlist.artworkUrl = artworkUrl;
+    playlist.created = item.created_at;
+    playlist.duration = soundbyte.timeFromMilliseconds(item.duration);
+    playlist.description = item.description;
+    playlist.title = item.title;
+    playlist.user = user;
     return playlist;
 }

@@ -58,7 +58,14 @@ declare namespace soundbyte {
     }
 
     export class Playlist extends Media {
-
+        playlistId: string;
+        link: string;
+        title: string;
+        description: string;
+        duration: number;
+        created: Date;
+        user: User;
+        artworkUrl: string;
     }
 
     export class Podcast extends Media {

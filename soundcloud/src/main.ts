@@ -17,7 +17,49 @@ function getMediaStream(trackId: string) {
 // CONTENT GROUPS
 
 function getUserStream(count: number, token: string, parameters: any) {
-    return new soundbyte.SourceResponse("Not Implemented", "This content group has not been implemented");
+    // Temp array that will store the return items
+    var returnItems = new Array<soundbyte.Media>();
+
+    // Construct the URL
+    var uri = "https://api.soundcloud.com/e1/me/stream?limit=" + count + "&cursor=" + token + "&linked_partitioning=1&client_id=" + clientId;
+
+    // Get a response from the SoundCloud API, and parse
+    // it into an object.
+    var data = JSON.parse(soundbyte.network.performRequest(uri));
+
+    // Extract the next offset / token
+    var nextUrl = data.next_href;
+    var extractedToken = null;
+
+    if (nextUrl != null) {
+        var matches = nextUrl.match(/cursor=([^&]*)/);
+        extractedToken = matches[0].substring(7, matches[0].length);
+    }
+
+    // Handle when there are no items
+    if (data.collection.length == 0) {
+        return new soundbyte.SourceResponse("No items", "Follow someone on SoundCloud to get started.");
+    }
+
+    // Convert the SoundCloud tracks into SoundByte objects.
+    data.collection.forEach(function (item: any) {
+        switch (item.type) {
+            // Tracks
+            case "track":
+            case "track-repost":
+                returnItems.push(toSbTrack(item));
+                break;
+
+            // Playlists
+            case "playlist":
+            case "playlist-repost":
+                returnItems.push(toSbPlaylist(item));
+                break;
+        }
+    });
+
+    // Return the items back to SoundByte
+    return new soundbyte.SourceResponse(returnItems, extractedToken);
 }
 
 function getUserLikes(count: number, token: string, parameters: any) {
