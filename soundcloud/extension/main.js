@@ -2,6 +2,9 @@ function getMediaStream(trackId) {
     var id = playbackIds[Math.floor(Math.random() * playbackIds.length)];
     return "https://api.soundcloud.com/tracks/" + trackId + "/stream?client_id=" + id;
 }
+function getUserStream(count, token, parameters) {
+    return new soundbyte.SourceResponse("Not Implemented", "This content group has not been implemented");
+}
 function getUserLikes(count, token, parameters) {
     var returnTracks = new Array();
     var uri = "https://api.soundcloud.com/me/favorites?limit=" + count + "&cursor=" + token + "&linked_partitioning=1&client_id=" + clientId;

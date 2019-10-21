@@ -16,6 +16,10 @@ function getMediaStream(trackId: string) {
 
 // CONTENT GROUPS
 
+function getUserStream(count: number, token: string, parameters: any) {
+    return new soundbyte.SourceResponse("Not Implemented", "This content group has not been implemented");
+}
+
 function getUserLikes(count: number, token: string, parameters: any) {
     // Temp array that will store the return tracks
     var returnTracks = new Array<soundbyte.Media>();

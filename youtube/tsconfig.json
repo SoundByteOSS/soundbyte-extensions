@@ -6,7 +6,8 @@
         "rootDir": "src/",
         "allowJs": true
     },
-    "include": [      
-        "src/**/*.js"
+    "include": [
+        "src/**/*.js",
+        "src/**/*.ts"
     ]
 }

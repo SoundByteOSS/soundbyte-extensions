@@ -1,6 +1,6 @@
 # Basic information about the extension
 id: 02dfa08f-6c33-47fd-89cc-8a1c7c65be46
-name: SoundCloud Music Support
+name: SoundCloud
 publisher: SoundByte
 version: 1.0.0
 platformVersion: 1.0
@@ -33,35 +33,44 @@ authentication:
   redirectUrl: http://localhost/soundbyte
   connectUrl: https://soundcloud.com/connect?scope=non-expiring&client_id=gU5Rw9VDiPPA4OcDlC8VVcb19sHDZFTT&response_type=code&display=popup&redirect_uri=http://localhost/soundbyte
 
-# Music Provider setup
-provider:
-  # Handle playback
+# Handle playback
   playback:
     supportsVideo: false
     onMusicRequest: getMediaStream # JS method to get the media stream
     #onVideoRequest
 
-  # Music content defintions
-  content:
-    # Explore Page
-    - title: New & Hot SoundCloud
-      area: DiscoverMedia
-      buttons:
-        - PlayAllButton
-        - ShufflePlayButton
-      onGet: getTrendingTracks
-      onViewMore: navigateTrendingTracks
-    - title: Top 50 SoundCloud
-      area: DiscoverMedia
-      buttons:
-        - PlayAllButton
-        - ShufflePlayButton
-      onGet: getTopTracks
-      onViewMore: navigateTopTracks
-    # Logged in users likes
-    - title: SoundCloud
-      area: MyMusicLikes
-      buttons:
-        - PlayAllButton
-        - ShufflePlayButton
-      onGet: getUserLikes
+# Music content defintions
+content:
+  # Explore Page
+  - title: New & Hot SoundCloud
+    area: DiscoverMedia
+    buttons:
+      - PlayAllButton
+      - ShufflePlayButton
+    onGet: getTrendingTracks
+    onViewMore: navigateTrendingTracks
+  - title: Top 50 SoundCloud
+    area: DiscoverMedia
+    buttons:
+      - PlayAllButton
+      - ShufflePlayButton
+    onGet: getTopTracks
+    onViewMore: navigateTopTracks
+
+  # Stream on home page
+  - title: SoundCloud Stream
+    area: Home
+    isAuthenticatedFeed: true
+    buttons:
+      - PlayAllButton
+      - ShufflePlayButton
+    onGet: getUserStream
+
+  # Logged in users likes
+  - title: SoundCloud
+    area: MyMusicLikes
+    isAuthenticatedFeed: true
+    buttons:
+      - PlayAllButton
+      - ShufflePlayButton
+    onGet: getUserLikes
