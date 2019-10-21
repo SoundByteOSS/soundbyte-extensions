@@ -29,7 +29,7 @@ function toSbTrack(item) {
     track.description = item.snippet.description;
     track.isLive = item.snippet.liveBroadcastContent != "none";
     track.user = user;
-    track.artworkUrl = item.snippet.thumbnails.maxres.url;
+    track.artworkUrl = getThumbnail(item.snippet.thumbnails);
     return track;
 }
 function toSbUser(item) {
@@ -37,4 +37,19 @@ function toSbUser(item) {
 }
 function toSbPlaylist(item) {
     return new soundbyte.Playlist();
+}
+function getThumbnail(thumbnails) {
+    if (thumbnails.maxres != null) {
+        return thumbnails.maxres.url;
+    }
+    if (thumbnails.high != null) {
+        return thumbnails.high.url;
+    }
+    if (thumbnails.medium != null) {
+        return thumbnails.medium.url;
+    }
+    if (thumbnails.default != null) {
+        return thumbnails.default.url;
+    }
+    return "";
 }

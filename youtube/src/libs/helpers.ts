@@ -14,7 +14,7 @@ function toSbTrack(item: any): soundbyte.Track {
     track.description = item.snippet.description;
     track.isLive = item.snippet.liveBroadcastContent != "none";
     track.user = user;
-    track.artworkUrl = item.snippet.thumbnails.maxres.url;
+    track.artworkUrl = getThumbnail(item.snippet.thumbnails);
 
     return track;
 }
@@ -27,3 +27,22 @@ function toSbPlaylist(item: any): soundbyte.Playlist {
     return new soundbyte.Playlist();
 }
 
+function getThumbnail(thumbnails: any): string {
+    if (thumbnails.maxres != null) {
+        return thumbnails.maxres.url;
+    }
+
+    if (thumbnails.high != null) {
+        return thumbnails.high.url;
+    }
+
+    if (thumbnails.medium != null) {
+        return thumbnails.medium.url;
+    }
+
+    if (thumbnails.default != null) {
+        return thumbnails.default.url;
+    }
+
+    return "";
+}
