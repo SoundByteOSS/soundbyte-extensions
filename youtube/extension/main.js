@@ -1,8 +1,8 @@
 function getVideoStream(trackId) {
-    return "";
+    return soundbyte.interop.youtube.getVideoStream(trackId);
 }
 function getAudioStream(trackId) {
-    return "";
+    return soundbyte.interop.youtube.getAudioStream(trackId);
 }
 function getTrending(count, token, parameters) {
     var returnItems = new Array();

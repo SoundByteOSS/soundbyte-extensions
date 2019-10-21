@@ -20,6 +20,13 @@ declare namespace soundbyte {
         export function performAnonymousRequest(url: string): string;
     }
 
+    export namespace interop {
+        export namespace youtube {
+            export function getVideoStream(id: string): string;
+            export function getAudioStream(id: string): string;
+        }
+    }
+
     export function timeFromMilliseconds(ms: number): any;
 
     export enum MediaType {

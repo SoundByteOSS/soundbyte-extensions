@@ -5,7 +5,7 @@
  * @param {*} trackId The track we need the music stream for.
  */
 function getVideoStream(trackId: string) {
-    return "";
+    return soundbyte.interop.youtube.getVideoStream(trackId);
 }
 
 /**
@@ -13,7 +13,7 @@ function getVideoStream(trackId: string) {
  * @param {*} trackId The track we need the music stream for.
  */
 function getAudioStream(trackId: string) {
-    return "";
+    return soundbyte.interop.youtube.getAudioStream(trackId);
 }
 
 // CONTENT GROUPS

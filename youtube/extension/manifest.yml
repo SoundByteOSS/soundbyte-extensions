@@ -15,6 +15,7 @@ permissions:
   - authentication
   - network
   - navigation
+  - interop
 
 # The platforms this music provider can run on.
 platforms:
