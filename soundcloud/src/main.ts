@@ -21,7 +21,7 @@ function getUserStream(count: number, token: string, parameters: any) {
     var returnItems = new Array<soundbyte.Media>();
 
     // Construct the URL
-    var uri = "https://api.soundcloud.com/e1/me/stream?limit=" + count + "&cursor=" + token + "&linked_partitioning=1&client_id=" + clientId;
+    var uri = "https://api-v2.soundcloud.com/stream?limit=" + count + "&cursor=" + token + "&linked_partitioning=1&client_id=" + clientId;
 
     // Get a response from the SoundCloud API, and parse
     // it into an object.
@@ -47,13 +47,13 @@ function getUserStream(count: number, token: string, parameters: any) {
             // Tracks
             case "track":
             case "track-repost":
-                returnItems.push(toSbTrack(item));
+                returnItems.push(toSbTrack(item.track));
                 break;
 
             // Playlists
             case "playlist":
             case "playlist-repost":
-                returnItems.push(toSbPlaylist(item));
+                returnItems.push(toSbPlaylist(item.playlist));
                 break;
         }
     });

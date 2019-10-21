@@ -4,7 +4,7 @@ function getMediaStream(trackId) {
 }
 function getUserStream(count, token, parameters) {
     var returnItems = new Array();
-    var uri = "https://api.soundcloud.com/e1/me/stream?limit=" + count + "&cursor=" + token + "&linked_partitioning=1&client_id=" + clientId;
+    var uri = "https://api-v2.soundcloud.com/stream?limit=" + count + "&cursor=" + token + "&linked_partitioning=1&client_id=" + clientId;
     var data = JSON.parse(soundbyte.network.performRequest(uri));
     var nextUrl = data.next_href;
     var extractedToken = null;
@@ -19,11 +19,11 @@ function getUserStream(count, token, parameters) {
         switch (item.type) {
             case "track":
             case "track-repost":
-                returnItems.push(toSbTrack(item));
+                returnItems.push(toSbTrack(item.track));
                 break;
             case "playlist":
             case "playlist-repost":
-                returnItems.push(toSbPlaylist(item));
+                returnItems.push(toSbPlaylist(item.playlist));
                 break;
         }
     });
