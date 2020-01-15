@@ -1,10 +1,33 @@
+function resolvePlaylist(playlistId) {
+    return toSbPlaylist(JSON.parse(soundbyte.network.performRequest("https://api.soundcloud.com/playlists/" +
+        playlistId +
+        "?client_id=" +
+        clientId)));
+}
+function resolvePlaylists(playlistIds) { }
+function resolveTrack(trackId) {
+    return toSbTrack(JSON.parse(soundbyte.network.performRequest("https://api.soundcloud.com/tracks/" +
+        trackId +
+        "?client_id=" +
+        clientId)));
+}
+function resolveTracks(trackIds) { }
+function resolveUser(userId) {
+    return toSbUser(JSON.parse(soundbyte.network.performRequest("https://api.soundcloud.com/users/" + userId + "?client_id=" + clientId)));
+}
+function resolveUsers(userIds) { }
 function getMediaStream(trackId) {
     var id = playbackIds[Math.floor(Math.random() * playbackIds.length)];
-    return "https://api.soundcloud.com/tracks/" + trackId + "/stream?client_id=" + id;
+    return ("https://api.soundcloud.com/tracks/" + trackId + "/stream?client_id=" + id);
 }
 function getUserStream(count, token, parameters) {
     var returnItems = new Array();
-    var uri = "https://api-v2.soundcloud.com/stream?limit=" + count + "&cursor=" + token + "&linked_partitioning=1&client_id=" + clientId;
+    var uri = "https://api-v2.soundcloud.com/stream?limit=" +
+        count +
+        "&cursor=" +
+        token +
+        "&linked_partitioning=1&client_id=" +
+        clientId;
     var data = JSON.parse(soundbyte.network.performRequest(uri));
     var nextUrl = data.next_href;
     var extractedToken = null;
@@ -31,7 +54,12 @@ function getUserStream(count, token, parameters) {
 }
 function getUserLikes(count, token, parameters) {
     var returnTracks = new Array();
-    var uri = "https://api.soundcloud.com/me/favorites?limit=" + count + "&cursor=" + token + "&linked_partitioning=1&client_id=" + clientId;
+    var uri = "https://api.soundcloud.com/me/favorites?limit=" +
+        count +
+        "&cursor=" +
+        token +
+        "&linked_partitioning=1&client_id=" +
+        clientId;
     var data = JSON.parse(soundbyte.network.performRequest(uri));
     var nextUrl = data.next_href;
     var extractedToken = null;
@@ -47,6 +75,29 @@ function getUserLikes(count, token, parameters) {
     });
     return new soundbyte.SourceResponse(returnTracks, extractedToken);
 }
+function getUserPlaylists(count, token, parameters) {
+    var returnPlaylists = new Array();
+    var uri = "https://api.soundcloud.com/me/playlists?limit=" +
+        count +
+        "&cursor=" +
+        token +
+        "&linked_partitioning=1&client_id=" +
+        clientId;
+    var data = JSON.parse(soundbyte.network.performRequest(uri));
+    var nextUrl = data.next_href;
+    var extractedToken = null;
+    if (nextUrl != null) {
+        var matches = nextUrl.match(/cursor=([^&]*)/);
+        extractedToken = matches[0].substring(7, matches[0].length);
+    }
+    if (data.collection.length == 0) {
+        return new soundbyte.SourceResponse("No playlists", "You have not created any playlists on SoundCloud yet.");
+    }
+    data.collection.forEach(function (item) {
+        returnPlaylists.push(toSbPlaylist(item));
+    });
+    return new soundbyte.SourceResponse(returnPlaylists, extractedToken);
+}
 function getTopTracks(count, token, parameters) {
     return getExploreItems(count, token, parameters, "top");
 }
@@ -57,7 +108,16 @@ function getExploreItems(count, token, parameters, kind) {
     var filter = parameters["filter"] || "all-music";
     var genre = "soundcloud%3Agenres%3A" + filter;
     var returnTracks = new Array();
-    var uri = "https://api-v2.soundcloud.com/charts?kind=" + kind + "&genre=" + genre + "&limit=" + count + "&offset=" + token + "&linked_partitioning=1&client_id=" + clientId;
+    var uri = "https://api-v2.soundcloud.com/charts?kind=" +
+        kind +
+        "&genre=" +
+        genre +
+        "&limit=" +
+        count +
+        "&offset=" +
+        token +
+        "&linked_partitioning=1&client_id=" +
+        clientId;
     var data = JSON.parse(soundbyte.network.performRequest(uri));
     var nextUrl = data.next_href;
     var extractedToken = null;
@@ -135,7 +195,13 @@ function navigateToExploreView(parent, title) {
     ]));
 }
 var clientId = "gU5Rw9VDiPPA4OcDlC8VVcb19sHDZFTT";
-var playbackIds = ["gU5Rw9VDiPPA4OcDlC8VVcb19sHDZFTT", "ytXCP8DpxZPd96FN12KsjT1P2mSHglXH", "59f81c512bd8eda616a21851093b2f16", "8547e755a4a625d4be8f243c1c7756a9", "0452ba585c12c2a37a143aca3b426b19"];
+var playbackIds = [
+    "gU5Rw9VDiPPA4OcDlC8VVcb19sHDZFTT",
+    "ytXCP8DpxZPd96FN12KsjT1P2mSHglXH",
+    "59f81c512bd8eda616a21851093b2f16",
+    "8547e755a4a625d4be8f243c1c7756a9",
+    "0452ba585c12c2a37a143aca3b426b19"
+];
 function toSbTrack(item) {
     var user = toSbUser(item.user);
     var artworkUrl = item.artwork_url || user.artworkUrl;
