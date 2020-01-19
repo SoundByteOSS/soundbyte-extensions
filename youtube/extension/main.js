@@ -6,7 +6,12 @@ function getAudioStream(trackId) {
 }
 function getTrending(count, token, parameters) {
     var returnItems = new Array();
-    var uri = "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&chart=mostPopular&maxResults=" + count + "&videoCategoryId=10&pageToken=" + token + "&key=" + clientKey;
+    var uri = "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&chart=mostPopular&maxResults=" +
+        count +
+        "&videoCategoryId=10&pageToken=" +
+        token +
+        "&key=" +
+        clientKey;
     var data = JSON.parse(soundbyte.network.performRequest(uri));
     if (data.items.length == 0) {
         return new soundbyte.SourceResponse("No results found", "There are no trending YouTube videos.");
@@ -18,7 +23,7 @@ function getTrending(count, token, parameters) {
     });
     return new soundbyte.SourceResponse(returnItems, data.nextPageToken);
 }
-var clientKey = "AIzaSyACcC1JE0krWn90rfk5kVpx-Y8qkoqta40";
+var clientKey = "AIzaSyD2l10qiS2CRIn5Mp8p9L9zltmepKu9Xrk";
 function toSbTrack(item) {
     var user = new soundbyte.User();
     user.userId = item.snippet.channelId;
