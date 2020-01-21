@@ -1,6 +1,6 @@
 /// <reference path="../../../soundbyte.d.ts" />
 
-const clientKey = "AIzaSyD2l10qiS2CRIn5Mp8p9L9zltmepKu9Xrk";
+const clientKey = "AIzaSyACcC1JE0krWn90rfk5kVpx-Y8qkoqta40";
 
 function toSbTrack(item: any): soundbyte.Track {
   var user = new soundbyte.User();
@@ -23,7 +23,18 @@ function toSbUser(item: any): soundbyte.User {
 }
 
 function toSbPlaylist(item: any): soundbyte.Playlist {
-  return new soundbyte.Playlist();
+  var user = new soundbyte.User();
+  user.userId = item.snippet.channelId;
+  user.username = item.snippet.channelTitle;
+
+  var playlist = new soundbyte.Playlist();
+  playlist.playlistId = item.id;
+  playlist.title = item.snippet.title;
+  playlist.description = item.snippet.description;
+  playlist.user = user;
+  playlist.artworkUrl = getThumbnail(item.snippet.thumbnails);
+
+  return playlist;
 }
 
 function getThumbnail(thumbnails: any): string {
