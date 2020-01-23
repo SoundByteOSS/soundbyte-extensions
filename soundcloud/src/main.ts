@@ -222,7 +222,7 @@ function navigateTrendingTracks(parent: any) {
 
 function navigateToExploreView(parent: any, title: string) {
   soundbyte.navigation.navigateTo(
-    "FilteredListViewModel",
+    "Generic.FilteredListViewModel",
     new soundbyte.FilteredListViewModelHolder(parent.collection, title, [
       new soundbyte.FilterViewItem(true, "General"),
 

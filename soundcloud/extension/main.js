@@ -145,7 +145,7 @@ function navigateTrendingTracks(parent) {
     navigateToExploreView(parent, "New & Hot SoundCloud Tracks");
 }
 function navigateToExploreView(parent, title) {
-    soundbyte.navigation.navigateTo("FilteredListViewModel", new soundbyte.FilteredListViewModelHolder(parent.collection, title, [
+    soundbyte.navigation.navigateTo("Generic.FilteredListViewModel", new soundbyte.FilteredListViewModelHolder(parent.collection, title, [
         new soundbyte.FilterViewItem(true, "General"),
         new soundbyte.FilterViewItem("All Music Genres", "all-music"),
         new soundbyte.FilterViewItem("All Audio Genres", "all-audio"),
