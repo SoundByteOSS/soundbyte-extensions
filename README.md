@@ -25,9 +25,9 @@ These extensions do not use TypeScript, but instead make use of the TypeScript C
 
 ## UWP install instructions
 
-**\*Please Note**: These instruction apply to SoundByte 20.x. This version is not yet publicly released.\*
+**\*Please Note**: These instruction apply to SoundByte v20. This version is not yet publicly released.\*
 
-**\*Please Note**: Depending on your SoundByte version, SoundCloud is considered a core extension and cannot be overridden. If this is the case, please upgrade your SoundByte client to 20.x.\*
+**\*Please Note**: Depending on your SoundByte version, SoundCloud is considered a core extension and cannot be overridden. If this is the case, please upgrade your SoundByte client to v20.\*
 
 1. Open SoundByte on your Windows 10 device
 2. Open the '..' menu (icon on the top right of your screen)
