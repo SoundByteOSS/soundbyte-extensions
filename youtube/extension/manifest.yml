@@ -2,7 +2,7 @@
 id: 47B8474C-2006-4845-9A46-4A5CDFE2B758
 name: YouTube
 publisher: SoundByte
-version: 1.0.5
+version: 1.0.6
 platformVersion: 1.0
 description: Provides support for YouTube Music playback.
 url: https://soundbytemedia.com/store/item/747B8474C-2006-4845-9A46-4A5CDFE2B758
@@ -64,3 +64,19 @@ content:
     area: MyMusicPlaylists
     isAuthenticatedFeed: true
     onGet: getUserPlaylists
+
+  # Search
+  - title: YouTube
+    area: SearchTracks
+    buttons:
+      - PlayAllButton
+      - ShufflePlayButton
+    onGet: getSearchedTracks
+
+  - title: YouTube
+    area: SearchPlaylists
+    onGet: getSearchedPlaylists
+
+  - title: YouTube
+    area: SearchUsers
+    onGet: getSearchedUsers

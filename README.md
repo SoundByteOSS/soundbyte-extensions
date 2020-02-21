@@ -10,8 +10,9 @@ These extensions do not use TypeScript, but instead make use of the TypeScript C
 
 1. Ensure node / npm are installed (or see step 2)
 2. `npm install -g typescript` (`sudo apt install node-typescript` might also work on linux / WSL)
-3. Navigate to the extension folder that you wish to build / run
-4. Run the `tsc` command to generate the extension `main.js` file
+3. `npm install uglify-js -g`
+4. Navigate to the extension folder that you wish to build / run
+5. Run the `build.sh` command to generate the extension `main.js` file
 
 ## iOS install instructions
 
@@ -34,7 +35,6 @@ These extensions do not use TypeScript, but instead make use of the TypeScript C
 4. Toggle "Enable Developer Mode" to true
 5. Navigate to the music provider that you want to install (make sure you click on the "extension" subfolder - the one that contains the manifest.yml file)
 6. The music provider is now installed. You will need to refresh your screens to see any changes (click the refrsh button)
-
 
 ## Official Music Providers
 
@@ -79,4 +79,4 @@ Provides support for accessing YouTube services
 
 Providers support for listening to Spotify, premium only!
 
-- [x] Ability to sign in with your Spotify Premimum account 
+- [x] Ability to sign in with your Spotify Premimum account
