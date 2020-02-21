@@ -5,7 +5,7 @@ tsc
 
 cd extension
 
-uglifyjs --compress -- main.js
+uglifyjs main.js --compress --output main.js
 
 echo "Zipping..."
 

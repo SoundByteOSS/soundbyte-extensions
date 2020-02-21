@@ -12,6 +12,7 @@ function toSbTrack(item: any): soundbyte.Track {
   track.title = item.snippet.title;
   track.description = item.snippet.description;
   track.isLive = item.snippet.liveBroadcastContent != "none";
+  track.duration = getDuration(item);
   track.user = user;
   track.artworkUrl = getThumbnail(item.snippet.thumbnails);
 
@@ -55,4 +56,47 @@ function getThumbnail(thumbnails: any): string {
   }
 
   return "";
+}
+
+function getDuration(item: any) {
+  // No content details
+  if (item.contentDetails == undefined) {
+    return soundbyte.timeFromMilliseconds(0);
+  }
+
+  // No duration
+  if (isEmpty(item.contentDetails.duration)) {
+    // No end at
+    if (item.contentDetails.endAt == undefined) {
+      return soundbyte.timeFromMilliseconds(0);
+    }
+
+    // endAt is in seconds
+    return soundbyte.timeFromMilliseconds(item.contentDetails.endAt * 100);
+  }
+
+  // Handle YouTube format
+  soundbyte.timeFromMilliseconds(
+    ytDurationToSeconds(item.contentDetails.duration) * 100
+  );
+}
+
+function isEmpty(str: string): boolean {
+  return !str || 0 === str.length;
+}
+
+function ytDurationToSeconds(duration: string) {
+  var match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+
+  match = match.slice(1).map(function(x) {
+    if (x != null) {
+      return x.replace(/\D/, "");
+    }
+  });
+
+  var hours = parseInt(match[0]) || 0;
+  var minutes = parseInt(match[1]) || 0;
+  var seconds = parseInt(match[2]) || 0;
+
+  return hours * 3600 + minutes * 60 + seconds;
 }
