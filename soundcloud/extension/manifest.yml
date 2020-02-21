@@ -2,7 +2,7 @@
 id: 02dfa08f-6c33-47fd-89cc-8a1c7c65be46
 name: SoundCloud
 publisher: SoundByte
-version: 1.0.2
+version: 1.0.3
 platformVersion: 1.0
 description: Provides support for SoundCloud playback
 url: https://soundbytemedia.com/store/details?id=02dfa08f-6c33-47fd-89cc-8a1c7c65be46
@@ -89,3 +89,19 @@ content:
     area: MyMusicPlaylists
     isAuthenticatedFeed: true
     onGet: getUserPlaylists
+
+  # Search
+  - title: SoundCloud
+    area: SearchTracks
+    buttons:
+      - PlayAllButton
+      - ShufflePlayButton
+    onGet: getSearchedTracks
+
+  - title: SoundCloud
+    area: SearchPlaylists
+    onGet: getSearchedPlaylists
+
+  - title: SoundCloud
+    area: SearchUsers
+    onGet: getSearchedUsers

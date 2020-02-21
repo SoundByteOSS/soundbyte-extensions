@@ -194,6 +194,84 @@ function navigateToExploreView(parent, title) {
         new soundbyte.FilterViewItem("Technology", "technology")
     ]));
 }
+function getSearchedTracks(count, token, parameters) {
+    var query = parameters["query"];
+    var returnItems = new Array();
+    var uri = "https://api.soundcloud.com/tracks?limit=" +
+        count +
+        "&offset=" +
+        token +
+        "&linked_partitioning=1&q=" +
+        query +
+        "&client_id=" +
+        clientId;
+    var data = JSON.parse(soundbyte.network.performRequest(uri));
+    var nextUrl = data.next_href;
+    var extractedToken = null;
+    if (nextUrl != null) {
+        var matches = nextUrl.match(/offset=([^&]*)/);
+        extractedToken = matches[0].substring(7, matches[0].length);
+    }
+    if (data.collection.length == 0) {
+        return new soundbyte.SourceResponse("No results found", "Could not find any results matching " + query);
+    }
+    data.collection.forEach(function (item) {
+        returnItems.push(toSbTrack(item));
+    });
+    return new soundbyte.SourceResponse(returnItems, extractedToken);
+}
+function getSearchedPlaylists(count, token, parameters) {
+    var query = parameters["query"];
+    var returnItems = new Array();
+    var uri = "https://api.soundcloud.com/playlists?limit=" +
+        count +
+        "&offset=" +
+        token +
+        "&linked_partitioning=1&q=" +
+        query +
+        "&client_id=" +
+        clientId;
+    var data = JSON.parse(soundbyte.network.performRequest(uri));
+    var nextUrl = data.next_href;
+    var extractedToken = null;
+    if (nextUrl != null) {
+        var matches = nextUrl.match(/offset=([^&]*)/);
+        extractedToken = matches[0].substring(7, matches[0].length);
+    }
+    if (data.collection.length == 0) {
+        return new soundbyte.SourceResponse("No results found", "Could not find any results matching " + query);
+    }
+    data.collection.forEach(function (item) {
+        returnItems.push(toSbPlaylist(item));
+    });
+    return new soundbyte.SourceResponse(returnItems, extractedToken);
+}
+function getSearchedUsers(count, token, parameters) {
+    var query = parameters["query"];
+    var returnItems = new Array();
+    var uri = "https://api.soundcloud.com/users?limit=" +
+        count +
+        "&offset=" +
+        token +
+        "&linked_partitioning=1&q=" +
+        query +
+        "&client_id=" +
+        clientId;
+    var data = JSON.parse(soundbyte.network.performRequest(uri));
+    var nextUrl = data.next_href;
+    var extractedToken = null;
+    if (nextUrl != null) {
+        var matches = nextUrl.match(/offset=([^&]*)/);
+        extractedToken = matches[0].substring(7, matches[0].length);
+    }
+    if (data.collection.length == 0) {
+        return new soundbyte.SourceResponse("No results found", "Could not find any results matching " + query);
+    }
+    data.collection.forEach(function (item) {
+        returnItems.push(toSbUser(item));
+    });
+    return new soundbyte.SourceResponse(returnItems, extractedToken);
+}
 var clientId = "gU5Rw9VDiPPA4OcDlC8VVcb19sHDZFTT";
 var playbackIds = [
     "gU5Rw9VDiPPA4OcDlC8VVcb19sHDZFTT",

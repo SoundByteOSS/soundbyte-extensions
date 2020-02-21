@@ -284,3 +284,141 @@ function navigateToExploreView(parent: any, title: string) {
     ])
   );
 }
+
+function getSearchedTracks(count: number, token: string, parameters: any) {
+  // Setup
+  const query = parameters["query"];
+  let returnItems = new Array<soundbyte.Media>();
+
+  // Construct the URL
+  var uri =
+    "https://api.soundcloud.com/tracks?limit=" +
+    count +
+    "&offset=" +
+    token +
+    "&linked_partitioning=1&q=" +
+    query +
+    "&client_id=" +
+    clientId;
+
+  // Get a response from the SoundCloud API, and parse
+  // it into an object.
+  var data = JSON.parse(soundbyte.network.performRequest(uri));
+
+  // Extract the next offset / token
+  var nextUrl = data.next_href;
+  var extractedToken = null;
+
+  if (nextUrl != null) {
+    var matches = nextUrl.match(/offset=([^&]*)/);
+    extractedToken = matches[0].substring(7, matches[0].length);
+  }
+
+  // Handle when there are no items
+  if (data.collection.length == 0) {
+    return new soundbyte.SourceResponse(
+      "No results found",
+      "Could not find any results matching " + query
+    );
+  }
+
+  // Convert
+  data.collection.forEach(function(item: any) {
+    returnItems.push(toSbTrack(item));
+  });
+
+  // Return
+  return new soundbyte.SourceResponse(returnItems, extractedToken);
+}
+
+function getSearchedPlaylists(count: number, token: string, parameters: any) {
+  // Setup
+  const query = parameters["query"];
+  let returnItems = new Array<soundbyte.Media>();
+
+  // Construct the URL
+  var uri =
+    "https://api.soundcloud.com/playlists?limit=" +
+    count +
+    "&offset=" +
+    token +
+    "&linked_partitioning=1&q=" +
+    query +
+    "&client_id=" +
+    clientId;
+
+  // Get a response from the SoundCloud API, and parse
+  // it into an object.
+  var data = JSON.parse(soundbyte.network.performRequest(uri));
+
+  // Extract the next offset / token
+  var nextUrl = data.next_href;
+  var extractedToken = null;
+
+  if (nextUrl != null) {
+    var matches = nextUrl.match(/offset=([^&]*)/);
+    extractedToken = matches[0].substring(7, matches[0].length);
+  }
+
+  // Handle when there are no items
+  if (data.collection.length == 0) {
+    return new soundbyte.SourceResponse(
+      "No results found",
+      "Could not find any results matching " + query
+    );
+  }
+
+  // Convert
+  data.collection.forEach(function(item: any) {
+    returnItems.push(toSbPlaylist(item));
+  });
+
+  // Return
+  return new soundbyte.SourceResponse(returnItems, extractedToken);
+}
+
+function getSearchedUsers(count: number, token: string, parameters: any) {
+  // Setup
+  const query = parameters["query"];
+  let returnItems = new Array<soundbyte.Media>();
+
+  // Construct the URL
+  var uri =
+    "https://api.soundcloud.com/users?limit=" +
+    count +
+    "&offset=" +
+    token +
+    "&linked_partitioning=1&q=" +
+    query +
+    "&client_id=" +
+    clientId;
+
+  // Get a response from the SoundCloud API, and parse
+  // it into an object.
+  var data = JSON.parse(soundbyte.network.performRequest(uri));
+
+  // Extract the next offset / token
+  var nextUrl = data.next_href;
+  var extractedToken = null;
+
+  if (nextUrl != null) {
+    var matches = nextUrl.match(/offset=([^&]*)/);
+    extractedToken = matches[0].substring(7, matches[0].length);
+  }
+
+  // Handle when there are no items
+  if (data.collection.length == 0) {
+    return new soundbyte.SourceResponse(
+      "No results found",
+      "Could not find any results matching " + query
+    );
+  }
+
+  // Convert
+  data.collection.forEach(function(item: any) {
+    returnItems.push(toSbUser(item));
+  });
+
+  // Return
+  return new soundbyte.SourceResponse(returnItems, extractedToken);
+}
