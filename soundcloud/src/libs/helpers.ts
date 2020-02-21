@@ -83,3 +83,7 @@ function toSbPlaylist(item: any): soundbyte.Playlist {
 
   return playlist;
 }
+
+function isEmpty(str: string): boolean {
+  return !str || 0 === str.length;
+}

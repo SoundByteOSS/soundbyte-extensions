@@ -294,12 +294,15 @@ function getSearchedTracks(count: number, token: string, parameters: any) {
   var uri =
     "https://api.soundcloud.com/tracks?limit=" +
     count +
-    "&offset=" +
-    token +
     "&linked_partitioning=1&q=" +
     query +
     "&client_id=" +
     clientId;
+
+  // Handle the offset
+  if (!isEmpty(token)) {
+    uri = uri + "&offset=" + token;
+  }
 
   // Get a response from the SoundCloud API, and parse
   // it into an object.
@@ -340,12 +343,15 @@ function getSearchedPlaylists(count: number, token: string, parameters: any) {
   var uri =
     "https://api.soundcloud.com/playlists?limit=" +
     count +
-    "&offset=" +
-    token +
     "&linked_partitioning=1&q=" +
     query +
     "&client_id=" +
     clientId;
+
+  // Handle the offset
+  if (!isEmpty(token)) {
+    uri = uri + "&offset=" + token;
+  }
 
   // Get a response from the SoundCloud API, and parse
   // it into an object.
@@ -386,12 +392,15 @@ function getSearchedUsers(count: number, token: string, parameters: any) {
   var uri =
     "https://api.soundcloud.com/users?limit=" +
     count +
-    "&offset=" +
-    token +
     "&linked_partitioning=1&q=" +
     query +
     "&client_id=" +
     clientId;
+
+  // Handle the offset
+  if (!isEmpty(token)) {
+    uri = uri + "&offset=" + token;
+  }
 
   // Get a response from the SoundCloud API, and parse
   // it into an object.

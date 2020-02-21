@@ -199,12 +199,13 @@ function getSearchedTracks(count, token, parameters) {
     var returnItems = new Array();
     var uri = "https://api.soundcloud.com/tracks?limit=" +
         count +
-        "&offset=" +
-        token +
         "&linked_partitioning=1&q=" +
         query +
         "&client_id=" +
         clientId;
+    if (!isEmpty(token)) {
+        uri = uri + "&offset=" + token;
+    }
     var data = JSON.parse(soundbyte.network.performRequest(uri));
     var nextUrl = data.next_href;
     var extractedToken = null;
@@ -225,12 +226,13 @@ function getSearchedPlaylists(count, token, parameters) {
     var returnItems = new Array();
     var uri = "https://api.soundcloud.com/playlists?limit=" +
         count +
-        "&offset=" +
-        token +
         "&linked_partitioning=1&q=" +
         query +
         "&client_id=" +
         clientId;
+    if (!isEmpty(token)) {
+        uri = uri + "&offset=" + token;
+    }
     var data = JSON.parse(soundbyte.network.performRequest(uri));
     var nextUrl = data.next_href;
     var extractedToken = null;
@@ -251,12 +253,13 @@ function getSearchedUsers(count, token, parameters) {
     var returnItems = new Array();
     var uri = "https://api.soundcloud.com/users?limit=" +
         count +
-        "&offset=" +
-        token +
         "&linked_partitioning=1&q=" +
         query +
         "&client_id=" +
         clientId;
+    if (!isEmpty(token)) {
+        uri = uri + "&offset=" + token;
+    }
     var data = JSON.parse(soundbyte.network.performRequest(uri));
     var nextUrl = data.next_href;
     var extractedToken = null;
@@ -321,4 +324,7 @@ function toSbPlaylist(item) {
     playlist.title = item.title;
     playlist.user = user;
     return playlist;
+}
+function isEmpty(str) {
+    return !str || 0 === str.length;
 }
