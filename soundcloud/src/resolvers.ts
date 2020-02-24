@@ -6,6 +6,8 @@
 // ID or list of IDs, resolve a certain resource)
 // ------------------------------------------------- //
 
+function getPlaylistTracks() {}
+
 /**
  * Performs a request to resolve a soundcloud playlist
  * @param playlistId A single playlist id to resolve
@@ -83,4 +85,37 @@ function getMediaStream(trackId: string) {
   return (
     "https://api.soundcloud.com/tracks/" + trackId + "/stream?client_id=" + id
   );
+}
+
+/**
+ * Resolves a list of tracks for a playlist
+ * @param count How many items to get
+ * @param token Where the next data is
+ * @param parameters The playlist id to get tracks for parameters["playlistId"]
+ */
+function resolvePlaylistTracks(count: number, token: string, parameters: any) {
+  const playlistId = parameters["playlistId"];
+
+  // Construct the URL
+  let uri = `https://api.soundcloud.com/playlists/${playlistId}?client_id=${clientId}`;
+  let data = JSON.parse(soundbyte.network.performRequest(uri));
+
+  // No data
+  if (data.tracks.length == 0) {
+    return new soundbyte.SourceResponse(
+      "No Music",
+      "There is no music in this playlist"
+    );
+  }
+
+  // List of items to return
+  let returnItems = new Array<soundbyte.Media>();
+
+  // Convert
+  data.tracks.forEach(function(item: any) {
+    returnItems.push(toSbTrack(item));
+  });
+
+  // Return
+  return new soundbyte.SourceResponse(returnItems, "eol"); // EOL means there are no more items
 }

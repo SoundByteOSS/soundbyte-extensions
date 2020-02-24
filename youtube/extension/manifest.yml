@@ -2,7 +2,7 @@
 id: 47B8474C-2006-4845-9A46-4A5CDFE2B758
 name: YouTube
 publisher: SoundByte
-version: 1.0.7
+version: 1.0.8
 platformVersion: 1.0
 description: Provides support for YouTube Music playback.
 url: https://soundbytemedia.com/store/item/747B8474C-2006-4845-9A46-4A5CDFE2B758
@@ -39,6 +39,11 @@ playback:
   supportsVideo: true
   onMusicRequest: getAudioStream # JS method to get the audio stream
   onVideoRequest: getVideoStream # JS method to get the video stream
+
+# Resolvers
+resolvers:
+  # Special resolvers that return a soundbyte.SourceResponse
+  playlistTracks: resolvePlaylistTracks
 
 # Music content defintions
 content:

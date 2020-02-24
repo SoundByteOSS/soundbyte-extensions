@@ -11,10 +11,14 @@ function toSbTrack(item: any): soundbyte.Track {
   track.trackId = item.id;
   track.title = item.snippet.title;
   track.description = item.snippet.description;
-  track.isLive = item.snippet.liveBroadcastContent != "none";
   track.duration = getDuration(item);
   track.user = user;
   track.artworkUrl = getThumbnail(item.snippet.thumbnails);
+
+  // Detect if live
+  track.isLive =
+    item.snippet.liveBroadcastContent != undefined &&
+    item.snippet.liveBroadcastContent != "none";
 
   return track;
 }
@@ -39,6 +43,11 @@ function toSbPlaylist(item: any): soundbyte.Playlist {
 }
 
 function getThumbnail(thumbnails: any): string {
+  // Handle if the video was deleted
+  if (thumbnails == undefined) {
+    return "https://soundbytemedia.com/images/512x512-logo.png";
+  }
+
   if (thumbnails.maxres != null) {
     return thumbnails.maxres.url;
   }
@@ -55,7 +64,7 @@ function getThumbnail(thumbnails: any): string {
     return thumbnails.default.url;
   }
 
-  return "";
+  return "https://soundbytemedia.com/images/512x512-logo.png";
 }
 
 function getDuration(item: any) {
