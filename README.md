@@ -54,9 +54,9 @@ Provides support for accessing SoundCloud services.
 - [ ] Uploaded playlists on the `Profile` page
 - [ ] Following users on the `Profile` page
 - [ ] Followed users on the `Profile` page
-- [ ] Tracks on the `Search` page
-- [ ] Playlists on the `Search` page
-- [ ] Users on the `Search` page
+- [x] Tracks on the `Search` page
+- [x] Playlists on the `Search` page
+- [x] Users on the `Search` page
 - [ ] Follow/unfollow user on the `Profile` page
 - [ ] Ability to manage playlists
 - [ ] Ability to create playlists
@@ -74,6 +74,10 @@ Provides support for accessing YouTube services
 - [x] Listen to YouTube videos
 - [x] View your playlists
 - [x] View your likes
+- [x] Search for playlists
+- [x] Search for videos
+- [ ] Search for channels
+- [x] View contents of playlist
 
 ### Spotify Premium
 
